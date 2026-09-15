@@ -1,0 +1,64 @@
+@if (dashboard(); as d) {
+  <div class="dv-page">
+    <h1>Dashboard</h1>
+
+    <div class="dv-grid cards">
+      <app-summary-card label="Total Dreams" [value]="d.summary.totalDreams + ''" icon="auto_awesome" />
+      <app-summary-card label="Completed Dreams" [value]="d.summary.completedDreams + ''" icon="celebration" />
+      <app-summary-card label="Active Goals" [value]="d.summary.activeGoals + ''" icon="flag" />
+      <app-summary-card label="Total Target Amount" [value]="d.summary.totalTargetAmount | inrCompact" icon="track_changes" />
+      <app-summary-card label="Amount Saved" [value]="d.summary.totalSavedAmount | inrCompact" icon="savings" />
+      <app-summary-card label="Total Investments" [value]="d.summary.totalInvestments | inrCompact" icon="account_balance" />
+      <app-summary-card label="Current Portfolio Value" [value]="d.summary.currentPortfolioValue | inrCompact" icon="pie_chart" />
+      <app-summary-card
+        label="Portfolio Profit/Loss"
+        [value]="(d.summary.portfolioProfitLoss >= 0 ? '+' : '') + (d.summary.portfolioProfitLoss | inrCompact)"
+        icon="trending_up"
+        [tone]="d.summary.portfolioProfitLoss >= 0 ? 'positive' : 'negative'"
+      />
+    </div>
+
+    <div class="dv-grid charts">
+      <mat-card class="dv-card">
+        <h2>Dream Progress</h2>
+        <app-portfolio-chart [labels]="dreamProgressLabels" [data]="dreamProgressData()" />
+      </mat-card>
+
+      <mat-card class="dv-card">
+        <h2>Asset Allocation</h2>
+        @if (allocationLabels().length) {
+          <app-portfolio-chart [labels]="allocationLabels()" [data]="allocationData()" />
+        } @else {
+          <p class="dv-disclaimer">No stock holdings yet.</p>
+        }
+      </mat-card>
+    </div>
+
+    <mat-card class="dv-card">
+      <h2>Portfolio Growth</h2>
+      @if (portfolioGrowthLabels().length) {
+        <app-forecast-chart [labels]="portfolioGrowthLabels()" [series]="portfolioGrowthSeries()" />
+      }
+    </mat-card>
+
+    <mat-card class="dv-card">
+      <h2>Goal Timeline</h2>
+      <div class="timeline">
+        @for (item of d.goalTimeline; track item.dreamId) {
+          <div class="timeline-item">
+            <span class="year">{{ item.targetYear }}</span>
+            <span class="name">{{ item.name }}</span>
+          </div>
+        }
+      </div>
+    </mat-card>
+
+    <p class="dv-disclaimer">
+      Forecasts are estimates based on assumed returns and are not guaranteed. Actual investment returns may be higher or lower.
+    </p>
+  </div>
+} @else {
+  <div class="dv-page">
+    <p>Loading dashboard…</p>
+  </div>
+}

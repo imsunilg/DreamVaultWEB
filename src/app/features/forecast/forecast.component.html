@@ -1,0 +1,87 @@
+<div class="dv-page">
+  <h1>Investment Forecast</h1>
+
+  <div class="dv-grid layout">
+    <form [formGroup]="forecastForm" class="dv-card">
+      <h2>Inputs</h2>
+      <mat-form-field appearance="outline">
+        <mat-label>Current Investment (₹)</mat-label>
+        <input matInput type="number" formControlName="currentInvestment" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Monthly Investment (₹)</mat-label>
+        <input matInput type="number" formControlName="monthlyInvestment" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Expected CAGR (%)</mat-label>
+        <input matInput type="number" formControlName="expectedAnnualReturnRate" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Target Amount (₹, optional)</mat-label>
+        <input matInput type="number" formControlName="targetAmount" />
+      </mat-form-field>
+    </form>
+
+    @if (forecastResult(); as f) {
+      <mat-card class="dv-card">
+        <h2>3 / 5 / 10 Year Projection</h2>
+        <table mat-table [dataSource]="f.periods" class="dv-table">
+          <ng-container matColumnDef="years">
+            <th mat-header-cell *matHeaderCellDef>Period</th>
+            <td mat-cell *matCellDef="let p">{{ p.years }} Years</td>
+          </ng-container>
+          <ng-container matColumnDef="invested">
+            <th mat-header-cell *matHeaderCellDef>Invested</th>
+            <td mat-cell *matCellDef="let p">{{ p.invested | inr }}</td>
+          </ng-container>
+          <ng-container matColumnDef="estimatedValue">
+            <th mat-header-cell *matHeaderCellDef>Estimated Value</th>
+            <td mat-cell *matCellDef="let p">{{ p.estimatedValue | inr }}</td>
+          </ng-container>
+          <ng-container matColumnDef="gain">
+            <th mat-header-cell *matHeaderCellDef>Gain</th>
+            <td mat-cell *matCellDef="let p">{{ p.gain | inr }}</td>
+          </ng-container>
+          <ng-container matColumnDef="cagrPercent">
+            <th mat-header-cell *matHeaderCellDef>CAGR</th>
+            <td mat-cell *matCellDef="let p">{{ p.cagrPercent }}%</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="periodColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: periodColumns"></tr>
+        </table>
+      </mat-card>
+    }
+  </div>
+
+  @if (chartLabels().length) {
+    <mat-card class="dv-card">
+      <h2>Forecast Graph</h2>
+      <app-forecast-chart [labels]="chartLabels()" [series]="chartSeries()" />
+    </mat-card>
+  }
+
+  <mat-card class="dv-card">
+    <h2>CAGR Calculator</h2>
+    <form [formGroup]="cagrForm" class="cagr-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Initial Investment (₹)</mat-label>
+        <input matInput type="number" formControlName="initialInvestment" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Final Value (₹)</mat-label>
+        <input matInput type="number" formControlName="finalValue" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Period (Years)</mat-label>
+        <input matInput type="number" formControlName="periodYears" />
+      </mat-form-field>
+    </form>
+    @if (cagrResult(); as c) {
+      <div class="cagr-result">CAGR: <strong>{{ c.cagrPercent }}%</strong></div>
+    }
+  </mat-card>
+
+  <p class="dv-disclaimer">
+    Forecasts are estimates based on assumed returns and are not guaranteed. Actual investment returns may be higher or lower.
+  </p>
+</div>

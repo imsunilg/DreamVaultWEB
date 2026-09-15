@@ -1,0 +1,7 @@
+<div class="dv-page">
+  <h1>Stock Transactions</h1>
+
+  <mat-card class="dv-card">
+    <app-transaction-table [transactions]="sortedTransactions()" [showStockColumn]="true" (deleteTransaction)="deleteTransaction($event)" />
+  </mat-card>
+</div>

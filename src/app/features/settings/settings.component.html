@@ -1,0 +1,23 @@
+<div class="dv-page">
+  <h1>Settings</h1>
+
+  <mat-card class="dv-card">
+    <h2>Appearance</h2>
+    <mat-slide-toggle [checked]="theme.isDarkTheme()" (change)="theme.setDarkTheme($event.checked)">
+      Dark theme
+    </mat-slide-toggle>
+  </mat-card>
+
+  <mat-card class="dv-card">
+    <h2>Currency</h2>
+    <p>All amounts are shown in Indian Rupees (₹), with large values abbreviated as Lakhs (L) and Crores (Cr).</p>
+  </mat-card>
+
+  <mat-card class="dv-card">
+    <h2>About</h2>
+    <p>DreamVault is a personal, single-user dream/goal planner and investment portfolio tracker. All data is stored locally in your own PostgreSQL database.</p>
+    <p class="dv-disclaimer">
+      Forecasts are estimates based on assumed returns and are not guaranteed. Actual investment returns may be higher or lower.
+    </p>
+  </mat-card>
+</div>

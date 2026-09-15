@@ -1,0 +1,29 @@
+.charts {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.timeline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.timeline-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background-color: var(--mat-sys-secondary-container);
+  min-width: 100px;
+
+  .year {
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .name {
+    font-size: 12px;
+    text-align: center;
+  }
+}

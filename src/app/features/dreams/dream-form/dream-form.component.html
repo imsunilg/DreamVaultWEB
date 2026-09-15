@@ -1,0 +1,96 @@
+<div class="dv-page">
+  <h1>{{ isEdit() ? 'Edit Dream' : 'Add Dream' }}</h1>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="dream-form dv-card">
+    <mat-form-field appearance="outline">
+      <mat-label>Dream Name</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" rows="2"></textarea>
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="categoryId">
+          @for (category of categories(); track category.categoryId) {
+            <mat-option [value]="category.categoryId">{{ category.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Priority</mat-label>
+        <mat-select formControlName="priority">
+          @for (priority of priorities; track priority) {
+            <mat-option [value]="priority">{{ priority }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          @for (status of statuses; track status) {
+            <mat-option [value]="status">{{ status }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Target Amount (₹)</mat-label>
+        <input matInput type="number" formControlName="targetAmount" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Current Saved Amount (₹)</mat-label>
+        <input matInput type="number" formControlName="currentAmount" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Monthly Contribution (₹)</mat-label>
+        <input matInput type="number" formControlName="monthlyContribution" />
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Expected Return Rate (%)</mat-label>
+        <input matInput type="number" formControlName="expectedReturnRate" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Inflation Rate (%)</mat-label>
+        <input matInput type="number" formControlName="inflationRate" />
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Start Date</mat-label>
+        <input matInput [matDatepicker]="startPicker" formControlName="startDate" />
+        <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Target Date</mat-label>
+        <input matInput [matDatepicker]="targetPicker" formControlName="targetDate" />
+        <mat-datepicker-toggle matIconSuffix [for]="targetPicker"></mat-datepicker-toggle>
+        <mat-datepicker #targetPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Notes</mat-label>
+      <textarea matInput formControlName="notes" rows="2"></textarea>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" type="submit">{{ isEdit() ? 'Save Changes' : 'Create Dream' }}</button>
+  </form>
+</div>

@@ -1,0 +1,49 @@
+<div class="dv-page">
+  <h1>SIP Planner</h1>
+
+  <div class="dv-grid layout">
+    <form [formGroup]="form" class="dv-card sip-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Initial Investment (₹)</mat-label>
+        <input matInput type="number" formControlName="initialInvestment" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Monthly Investment (₹)</mat-label>
+        <input matInput type="number" formControlName="monthlyInvestment" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Expected Annual Return (%)</mat-label>
+        <input matInput type="number" formControlName="expectedAnnualReturnRate" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Duration (Years)</mat-label>
+        <input matInput type="number" formControlName="durationYears" />
+      </mat-form-field>
+    </form>
+
+    @if (result(); as r) {
+      <mat-card class="dv-card sip-result">
+        <h2>Result</h2>
+        <div class="result-row">
+          <span>Total Investment</span>
+          <strong>{{ r.totalInvestment | inr }}</strong>
+        </div>
+        <div class="result-row">
+          <span>Estimated Growth</span>
+          <strong>{{ r.estimatedGrowth | inr }}</strong>
+        </div>
+        <div class="result-row highlight">
+          <span>Estimated Future Value</span>
+          <strong>{{ r.estimatedFutureValue | inr }}</strong>
+        </div>
+      </mat-card>
+    }
+  </div>
+
+  <p class="dv-disclaimer">
+    Forecasts are estimates based on assumed returns and are not guaranteed. Actual investment returns may be higher or lower.
+  </p>
+</div>

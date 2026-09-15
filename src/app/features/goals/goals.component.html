@@ -1,0 +1,20 @@
+<div class="dv-page">
+  <h1>Financial Goals</h1>
+
+  <div class="dv-grid">
+    @for (goal of goals(); track goal.goalId) {
+      <mat-card class="dv-card">
+        <a [routerLink]="['/dreams', goal.dreamId]"><h3>{{ goal.dreamName }}</h3></a>
+        <app-progress-bar [percent]="goal.progressPercent" [label]="(goal.currentAmount | inr) + ' / ' + (goal.targetAmount | inr)" />
+        <dl>
+          <div><dt>Required Monthly</dt><dd>{{ goal.requiredMonthlyContribution | inr }}</dd></div>
+          <div><dt>Current Monthly</dt><dd>{{ goal.monthlyContribution | inr }}</dd></div>
+          <div><dt>Target Date</dt><dd>{{ goal.targetDate }}</dd></div>
+        </dl>
+        <div class="status" [class]="'dv-status-' + goal.status">{{ goal.status }}</div>
+      </mat-card>
+    } @empty {
+      <p>No goals yet. Add a dream to create its goal automatically.</p>
+    }
+  </div>
+</div>

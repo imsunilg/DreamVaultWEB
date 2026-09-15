@@ -1,0 +1,39 @@
+.summary-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background-color: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+}
+
+.text-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 13px;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.value {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.tone-positive .value {
+  color: #1b8a4c;
+}
+
+.tone-negative .value {
+  color: #c0392b;
+}

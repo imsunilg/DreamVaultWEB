@@ -1,0 +1,32 @@
+dl {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  dt {
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  dd {
+    margin: 0;
+    font-weight: 600;
+
+    &.negative {
+      color: #c0392b;
+    }
+  }
+}
+
+.inline-form,
+.transaction-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+}

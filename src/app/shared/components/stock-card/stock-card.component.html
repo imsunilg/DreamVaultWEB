@@ -1,0 +1,26 @@
+<a class="stock-card dv-card" [routerLink]="['/investments/stocks', stock.stockId]">
+  <div class="stock-header">
+    <div>
+      <strong>{{ stock.symbol }}</strong>
+      <span class="company-name">{{ stock.companyName }}</span>
+    </div>
+    <mat-icon [class]="stock.profitLoss >= 0 ? 'positive' : 'negative'">
+      {{ stock.profitLoss >= 0 ? 'trending_up' : 'trending_down' }}
+    </mat-icon>
+  </div>
+
+  <div class="stock-figures">
+    <div><span>Qty</span><strong>{{ stock.quantity }}</strong></div>
+    <div><span>Avg Price</span><strong>{{ stock.averageBuyPrice | inr }}</strong></div>
+    <div><span>Current Price</span><strong>{{ stock.currentPrice | inr }}</strong></div>
+  </div>
+
+  <div class="stock-figures">
+    <div><span>Invested</span><strong>{{ stock.investedAmount | inr }}</strong></div>
+    <div><span>Value</span><strong>{{ stock.currentValue | inr }}</strong></div>
+    <div [class]="stock.profitLoss >= 0 ? 'positive' : 'negative'">
+      <span>P/L</span>
+      <strong>{{ stock.profitLoss | inr }} ({{ stock.profitLossPercent | number: '1.1-1' }}%)</strong>
+    </div>
+  </div>
+</a>

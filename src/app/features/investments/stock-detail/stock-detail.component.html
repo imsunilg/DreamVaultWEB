@@ -1,0 +1,81 @@
+@if (stock(); as s) {
+  <div class="dv-page">
+    <a routerLink="/investments/stocks" class="back-link">← Back to Stocks</a>
+    <h1>{{ s.symbol }} — {{ s.companyName }}</h1>
+
+    <div class="dv-grid">
+      <mat-card class="dv-card">
+        <h2>Summary</h2>
+        <dl>
+          <div><dt>Quantity</dt><dd>{{ s.quantity }}</dd></div>
+          <div><dt>Average Buy Price</dt><dd>{{ s.averageBuyPrice | inr }}</dd></div>
+          <div><dt>Total Invested</dt><dd>{{ s.investedAmount | inr }}</dd></div>
+          <div><dt>Current Price</dt><dd>{{ s.currentPrice | inr }}</dd></div>
+          <div><dt>Current Value</dt><dd>{{ s.currentValue | inr }}</dd></div>
+          <div><dt>Profit/Loss</dt><dd [class.negative]="s.profitLoss < 0">{{ s.profitLoss | inr }}</dd></div>
+          <div><dt>Return %</dt><dd [class.negative]="s.profitLossPercent < 0">{{ s.profitLossPercent | number: '1.1-1' }}%</dd></div>
+        </dl>
+      </mat-card>
+
+      <mat-card class="dv-card">
+        <h2>Update Current Price</h2>
+        <form [formGroup]="priceForm" (ngSubmit)="updatePrice()" class="inline-form">
+          <mat-form-field appearance="outline">
+            <mat-label>Current Price (₹)</mat-label>
+            <input matInput type="number" formControlName="currentPrice" />
+          </mat-form-field>
+          <button mat-flat-button color="primary" type="submit">Update</button>
+        </form>
+      </mat-card>
+    </div>
+
+    <mat-card class="dv-card">
+      <h2>Investment Over Time</h2>
+      @if (chartLabels().length) {
+        <app-forecast-chart [labels]="chartLabels()" [series]="chartSeries()" />
+      } @else {
+        <p class="dv-disclaimer">Add transactions to see the investment chart.</p>
+      }
+    </mat-card>
+
+    <mat-card class="dv-card">
+      <h2>Add Transaction</h2>
+      <form [formGroup]="transactionForm" (ngSubmit)="addTransaction()" class="transaction-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Type</mat-label>
+          <mat-select formControlName="transactionType">
+            @for (type of transactionTypes; track type) {
+              <mat-option [value]="type">{{ type }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Date</mat-label>
+          <input matInput type="date" formControlName="transactionDate" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Quantity</mat-label>
+          <input matInput type="number" formControlName="quantity" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Price/Share (₹)</mat-label>
+          <input matInput type="number" formControlName="pricePerShare" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Brokerage (₹)</mat-label>
+          <input matInput type="number" formControlName="brokerage" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Taxes (₹)</mat-label>
+          <input matInput type="number" formControlName="taxes" />
+        </mat-form-field>
+        <button mat-flat-button color="primary" type="submit">Add</button>
+      </form>
+    </mat-card>
+
+    <mat-card class="dv-card">
+      <h2>Transactions</h2>
+      <app-transaction-table [transactions]="transactions()" (deleteTransaction)="deleteTransaction($event)" />
+    </mat-card>
+  </div>
+}

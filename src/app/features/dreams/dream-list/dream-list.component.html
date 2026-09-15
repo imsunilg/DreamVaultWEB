@@ -1,0 +1,28 @@
+<div class="dv-page">
+  <div class="page-header">
+    <h1>My Dreams</h1>
+    <a mat-flat-button color="primary" routerLink="/dreams/add">
+      <mat-icon>add</mat-icon>
+      Add Dream
+    </a>
+  </div>
+
+  <mat-form-field appearance="outline" class="filter-field">
+    <mat-label>Priority</mat-label>
+    <mat-select [(ngModel)]="priorityFilter">
+      <mat-option value="All">All</mat-option>
+      <mat-option value="Critical">Critical</mat-option>
+      <mat-option value="High">High</mat-option>
+      <mat-option value="Medium">Medium</mat-option>
+      <mat-option value="Low">Low</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="dv-grid">
+    @for (dream of filteredDreams(); track dream.dreamId) {
+      <app-dream-card [dream]="dream" />
+    } @empty {
+      <p>No dreams yet. Add your first dream to get started.</p>
+    }
+  </div>
+</div>

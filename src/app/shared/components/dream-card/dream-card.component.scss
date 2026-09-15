@@ -1,0 +1,59 @@
+.dream-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.15s ease;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.dream-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  h3 {
+    margin: 0;
+    flex: 1;
+    font-size: 17px;
+  }
+}
+
+.dream-figures,
+.dream-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+
+    span {
+      color: var(--mat-sys-on-surface-variant);
+    }
+
+    strong {
+      font-size: 14px;
+    }
+  }
+}
+
+.dream-status {
+  font-size: 13px;
+  text-align: right;
+}
+
+.priority-Critical {
+  --mat-chip-elevated-container-color: #f8d7da;
+}
+
+.priority-High {
+  --mat-chip-elevated-container-color: #ffe5b4;
+}

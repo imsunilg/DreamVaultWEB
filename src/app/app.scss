@@ -1,0 +1,37 @@
+.app-shell {
+  height: 100vh;
+}
+
+.app-sidenav {
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--mat-sys-outline-variant);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 16px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.active-link {
+  background-color: var(--mat-sys-secondary-container);
+}
+
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.app-content {
+  min-height: calc(100vh - 64px);
+}

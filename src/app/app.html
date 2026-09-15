@@ -1,0 +1,29 @@
+<mat-sidenav-container class="app-shell">
+  <mat-sidenav mode="side" opened class="app-sidenav">
+    <div class="brand">
+      <mat-icon>auto_awesome</mat-icon>
+      <span>DreamVault</span>
+    </div>
+    <mat-nav-list>
+      @for (item of navItems; track item.path) {
+        <a mat-list-item [routerLink]="item.path" routerLinkActive="active-link">
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span matListItemTitle>{{ item.label }}</span>
+        </a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar class="app-toolbar">
+      <span>Personal Dream & Investment Planner</span>
+      <span class="spacer"></span>
+      <button mat-icon-button (click)="theme.toggle()" aria-label="Toggle theme">
+        <mat-icon>{{ theme.isDarkTheme() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+    </mat-toolbar>
+    <main class="app-content">
+      <router-outlet />
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

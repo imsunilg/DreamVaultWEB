@@ -1,0 +1,55 @@
+<div class="dv-page">
+  <h1>Reports</h1>
+
+  <div class="dv-grid">
+    <mat-card class="dv-card">
+      <h2>Dream Report</h2>
+      <dl>
+        <div><dt>Total Dreams</dt><dd>{{ dreams().length }}</dd></div>
+        <div><dt>Completed Dreams</dt><dd>{{ dreams().filter(d => d.status === 'Completed').length }}</dd></div>
+        <div><dt>Active Dreams</dt><dd>{{ dreams().filter(d => d.status === 'Active').length }}</dd></div>
+        <div><dt>Total Target</dt><dd>{{ (dreams().reduce((s, d) => s + d.targetAmount, 0)) | inr }}</dd></div>
+        <div><dt>Total Saved</dt><dd>{{ (dreams().reduce((s, d) => s + d.currentAmount, 0)) | inr }}</dd></div>
+      </dl>
+    </mat-card>
+
+    <mat-card class="dv-card">
+      <h2>Investment Report</h2>
+      @if (portfolioSummary(); as p) {
+        <dl>
+          <div><dt>Total Invested</dt><dd>{{ p.totalInvested | inr }}</dd></div>
+          <div><dt>Current Portfolio</dt><dd>{{ p.currentValue | inr }}</dd></div>
+          <div><dt>Profit/Loss</dt><dd>{{ p.profitLoss | inr }}</dd></div>
+          <div><dt>Return</dt><dd>{{ p.returnPercent.toFixed(1) }}%</dd></div>
+          <div><dt>Best Performer</dt><dd>{{ bestStock()?.symbol ?? '—' }}</dd></div>
+          <div><dt>Worst Performer</dt><dd>{{ worstStock()?.symbol ?? '—' }}</dd></div>
+        </dl>
+      }
+    </mat-card>
+
+    <mat-card class="dv-card">
+      <h2>Goal Report</h2>
+      <dl>
+        <div><dt>On Track</dt><dd>{{ onTrackGoals().length }}</dd></div>
+        <div><dt>At Risk</dt><dd>{{ atRiskGoals().length }}</dd></div>
+        <div><dt>Behind</dt><dd>{{ behindGoals().length }}</dd></div>
+        <div><dt>Achieved</dt><dd>{{ achievedGoals().length }}</dd></div>
+      </dl>
+    </mat-card>
+
+    @if (forecast(); as f) {
+      <mat-card class="dv-card">
+        <h2>Forecast Report</h2>
+        <dl>
+          @for (p of f.periods; track p.years) {
+            <div><dt>{{ p.years }} Years</dt><dd>{{ p.estimatedValue | inr }}</dd></div>
+          }
+        </dl>
+      </mat-card>
+    }
+  </div>
+
+  <p class="dv-disclaimer">
+    Forecasts are estimates based on assumed returns and are not guaranteed. Actual investment returns may be higher or lower.
+  </p>
+</div>

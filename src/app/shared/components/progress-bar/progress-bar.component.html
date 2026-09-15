@@ -1,0 +1,9 @@
+<div class="progress-wrap">
+  @if (label) {
+    <div class="progress-label">
+      <span>{{ label }}</span>
+      <span>{{ clampedPercent() | number: '1.0-0' }}%</span>
+    </div>
+  }
+  <mat-progress-bar mode="determinate" [value]="clampedPercent()"></mat-progress-bar>
+</div>

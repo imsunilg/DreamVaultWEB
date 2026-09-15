@@ -1,0 +1,44 @@
+@if (summary(); as s) {
+  <div class="dv-page">
+    <h1>Portfolio</h1>
+
+    <div class="dv-grid cards">
+      <app-summary-card label="Total Invested" [value]="s.totalInvested | inrCompact" icon="account_balance" />
+      <app-summary-card label="Current Value" [value]="s.currentValue | inrCompact" icon="pie_chart" />
+      <app-summary-card
+        label="Profit"
+        [value]="(s.profitLoss | inrCompact)"
+        icon="trending_up"
+        [tone]="s.profitLoss >= 0 ? 'positive' : 'negative'"
+      />
+      <app-summary-card
+        label="Return"
+        [value]="s.returnPercent.toFixed(1) + '%'"
+        icon="percent"
+        [tone]="s.returnPercent >= 0 ? 'positive' : 'negative'"
+      />
+      <app-summary-card label="Number of Stocks" [value]="s.numberOfStocks + ''" icon="show_chart" />
+    </div>
+
+    <mat-card class="dv-card">
+      <h2>Asset Allocation</h2>
+      @if (allocation().length) {
+        <app-portfolio-chart [labels]="allocation().map(a => a.symbol)" [data]="allocation().map(a => a.currentValue)" />
+        <ul class="allocation-list">
+          @for (a of allocation(); track a.symbol) {
+            <li><strong>{{ a.symbol }}</strong> {{ a.companyName }} — {{ a.currentValue | inr }} ({{ a.allocationPercent }}%)</li>
+          }
+        </ul>
+      } @else {
+        <p class="dv-disclaimer">No stock holdings yet.</p>
+      }
+    </mat-card>
+
+    <mat-card class="dv-card">
+      <h2>Portfolio Growth</h2>
+      @if (growthLabels().length) {
+        <app-forecast-chart [labels]="growthLabels()" [series]="growthSeries()" />
+      }
+    </mat-card>
+  </div>
+}

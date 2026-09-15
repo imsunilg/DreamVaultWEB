@@ -1,0 +1,52 @@
+.stock-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.stock-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  strong {
+    font-size: 16px;
+    margin-right: 8px;
+  }
+
+  .company-name {
+    font-size: 13px;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}
+
+.stock-figures {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+
+    span {
+      color: var(--mat-sys-on-surface-variant);
+    }
+  }
+}
+
+.positive {
+  color: #1b8a4c;
+}
+
+.negative {
+  color: #c0392b;
+}

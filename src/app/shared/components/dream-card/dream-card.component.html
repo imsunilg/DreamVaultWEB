@@ -1,0 +1,24 @@
+<a class="dream-card dv-card" [routerLink]="['/dreams', dream.dreamId]">
+  <div class="dream-header">
+    <mat-icon>{{ icon }}</mat-icon>
+    <h3>{{ dream.name }}</h3>
+    <mat-chip [class]="'priority-' + dream.priority">{{ dream.priority }}</mat-chip>
+  </div>
+
+  <div class="dream-figures">
+    <div><span>Target</span><strong>{{ dream.targetAmount | inr }}</strong></div>
+    <div><span>Saved</span><strong>{{ dream.currentAmount | inr }}</strong></div>
+    <div><span>Remaining</span><strong>{{ dream.remainingAmount | inr }}</strong></div>
+  </div>
+
+  <app-progress-bar [percent]="dream.progressPercent"></app-progress-bar>
+
+  <div class="dream-footer">
+    <div><span>Monthly SIP</span><strong>{{ dream.monthlyContribution | inr }}</strong></div>
+    <div><span>Target Date</span><strong>{{ dream.targetDate | date: 'MMM yyyy' }}</strong></div>
+  </div>
+
+  <div class="dream-status" [class]="'dv-status-' + dream.computedStatus">
+    Status: {{ dream.computedStatus }}
+  </div>
+</a>
