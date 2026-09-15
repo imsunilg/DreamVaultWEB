@@ -72,6 +72,26 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
+.dv-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 600px) {
+  .dv-page {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .dv-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dv-card {
+    padding: 16px;
+  }
+}
+
 .dv-status-onTrack,
 .dv-status-OnTrack,
 .dv-status-Achieved,

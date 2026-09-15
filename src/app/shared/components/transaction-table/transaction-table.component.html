@@ -1,3 +1,4 @@
+<div class="dv-table-scroll">
 <table mat-table [dataSource]="transactions" class="dv-table">
   @if (showStockColumn) {
     <ng-container matColumnDef="stockId">
@@ -43,6 +44,7 @@
   <tr mat-header-row *matHeaderRowDef="columns"></tr>
   <tr mat-row *matRowDef="let row; columns: columns"></tr>
 </table>
+</div>
 
 @if (!transactions.length) {
   <p class="dv-disclaimer">No transactions yet.</p>

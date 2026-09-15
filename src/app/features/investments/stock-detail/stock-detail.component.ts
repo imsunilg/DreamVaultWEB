@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { AuthService } from '../../../core/services/auth.service';
 import { StockService } from '../../../core/services/stock.service';
 import { Stock, StockTransaction, StockTransactionType } from '../../../core/models/stock.model';
 import { InrPipe } from '../../../shared/pipes/inr.pipe';
@@ -36,6 +37,7 @@ export class StockDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private stockService = inject(StockService);
   private fb = inject(FormBuilder);
+  protected auth = inject(AuthService);
 
   stock = signal<Stock | null>(null);
   transactions = signal<StockTransaction[]>([]);

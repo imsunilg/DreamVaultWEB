@@ -1,29 +1,58 @@
-<mat-sidenav-container class="app-shell">
-  <mat-sidenav mode="side" opened class="app-sidenav">
-    <div class="brand">
-      <mat-icon>auto_awesome</mat-icon>
-      <span>DreamVault</span>
-    </div>
-    <mat-nav-list>
-      @for (item of navItems; track item.path) {
-        <a mat-list-item [routerLink]="item.path" routerLinkActive="active-link">
-          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-          <span matListItemTitle>{{ item.label }}</span>
-        </a>
-      }
-    </mat-nav-list>
-  </mat-sidenav>
+@if (auth.isAuthenticated()) {
+  <mat-sidenav-container class="app-shell">
+    <mat-sidenav
+      #sidenav
+      class="app-sidenav"
+      [mode]="isHandset() ? 'over' : 'side'"
+      [opened]="!isHandset()"
+      [fixedInViewport]="isHandset()"
+    >
+      <div class="brand">
+        <mat-icon>auto_awesome</mat-icon>
+        <span>DreamVault</span>
+      </div>
+      <mat-nav-list>
+        @for (item of navItems; track item.path) {
+          <a mat-list-item [routerLink]="item.path" routerLinkActive="active-link" (click)="onNavItemClick()">
+            <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+            <span matListItemTitle>{{ item.label }}</span>
+          </a>
+        }
+      </mat-nav-list>
+    </mat-sidenav>
 
-  <mat-sidenav-content>
-    <mat-toolbar class="app-toolbar">
-      <span>Personal Dream & Investment Planner</span>
-      <span class="spacer"></span>
-      <button mat-icon-button (click)="theme.toggle()" aria-label="Toggle theme">
-        <mat-icon>{{ theme.isDarkTheme() ? 'light_mode' : 'dark_mode' }}</mat-icon>
-      </button>
-    </mat-toolbar>
-    <main class="app-content">
-      <router-outlet />
-    </main>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    <mat-sidenav-content>
+      <mat-toolbar class="app-toolbar">
+        @if (isHandset()) {
+          <button mat-icon-button (click)="sidenav.toggle()" aria-label="Toggle navigation menu">
+            <mat-icon>menu</mat-icon>
+          </button>
+        }
+        <span class="toolbar-title">
+          <span class="full-title">Personal Dream & Investment Planner</span>
+          <span class="short-title">DreamVault</span>
+        </span>
+        <span class="spacer"></span>
+        <button mat-icon-button (click)="theme.toggle()" aria-label="Toggle theme">
+          <mat-icon>{{ theme.isDarkTheme() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        </button>
+        <button mat-button [matMenuTriggerFor]="userMenu" class="user-menu-trigger">
+          <mat-icon>account_circle</mat-icon>
+          <span class="user-name">{{ auth.currentUser()?.name }}</span>
+          <span class="user-role">{{ auth.currentUser()?.role }}</span>
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Log out</span>
+          </button>
+        </mat-menu>
+      </mat-toolbar>
+      <main class="app-content">
+        <router-outlet />
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+} @else {
+  <router-outlet />
+}

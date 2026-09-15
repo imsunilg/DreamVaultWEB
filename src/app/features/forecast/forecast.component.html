@@ -25,6 +25,7 @@
     @if (forecastResult(); as f) {
       <mat-card class="dv-card">
         <h2>3 / 5 / 10 Year Projection</h2>
+        <div class="dv-table-scroll">
         <table mat-table [dataSource]="f.periods" class="dv-table">
           <ng-container matColumnDef="years">
             <th mat-header-cell *matHeaderCellDef>Period</th>
@@ -49,6 +50,7 @@
           <tr mat-header-row *matHeaderRowDef="periodColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: periodColumns"></tr>
         </table>
+        </div>
       </mat-card>
     }
   </div>

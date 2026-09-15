@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../../core/services/auth.service';
 import { StockService } from '../../../core/services/stock.service';
 import { Stock } from '../../../core/models/stock.model';
 import { StockCardComponent } from '../../../shared/components/stock-card/stock-card.component';
@@ -18,6 +19,7 @@ import { StockCardComponent } from '../../../shared/components/stock-card/stock-
 export class StocksComponent implements OnInit {
   private stockService = inject(StockService);
   private fb = inject(FormBuilder);
+  protected auth = inject(AuthService);
 
   stocks = signal<Stock[]>([]);
   showAddForm = signal(false);

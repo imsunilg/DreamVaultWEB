@@ -1,12 +1,18 @@
 <div class="dv-page">
   <div class="page-header">
     <h1>Stocks</h1>
-    <button mat-flat-button color="primary" (click)="showAddForm.set(!showAddForm())">
-      <mat-icon>add</mat-icon> Add Stock
-    </button>
+    @if (auth.isAdmin()) {
+      <button mat-flat-button color="primary" (click)="showAddForm.set(!showAddForm())">
+        <mat-icon>add</mat-icon> Add Stock
+      </button>
+    }
   </div>
 
-  @if (showAddForm()) {
+  @if (!auth.isAdmin()) {
+    <p class="dv-disclaimer">You're viewing the shared portfolio in read-only mode. Only Admin accounts can add stocks or record transactions.</p>
+  }
+
+  @if (showAddForm() && auth.isAdmin()) {
     <form [formGroup]="form" (ngSubmit)="submit()" class="add-form dv-card">
       <mat-form-field appearance="outline">
         <mat-label>Symbol</mat-label>

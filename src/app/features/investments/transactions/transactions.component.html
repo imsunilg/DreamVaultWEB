@@ -2,6 +2,11 @@
   <h1>Stock Transactions</h1>
 
   <mat-card class="dv-card">
-    <app-transaction-table [transactions]="sortedTransactions()" [showStockColumn]="true" (deleteTransaction)="deleteTransaction($event)" />
+    <app-transaction-table
+      [transactions]="sortedTransactions()"
+      [showStockColumn]="true"
+      [allowActions]="auth.isAdmin()"
+      (deleteTransaction)="deleteTransaction($event)"
+    />
   </mat-card>
 </div>

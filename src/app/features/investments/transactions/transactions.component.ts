@@ -1,6 +1,7 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
+import { AuthService } from '../../../core/services/auth.service';
 import { StockService } from '../../../core/services/stock.service';
 import { Stock, StockTransaction } from '../../../core/models/stock.model';
 import { TransactionTableComponent } from '../../../shared/components/transaction-table/transaction-table.component';
@@ -18,6 +19,7 @@ interface EnrichedTransaction extends StockTransaction {
 })
 export class TransactionsComponent implements OnInit {
   private stockService = inject(StockService);
+  protected auth = inject(AuthService);
 
   stocks = signal<Stock[]>([]);
   allTransactions = signal<EnrichedTransaction[]>([]);

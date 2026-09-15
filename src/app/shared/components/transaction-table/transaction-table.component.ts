@@ -16,12 +16,15 @@ import { InrPipe } from '../../pipes/inr.pipe';
 export class TransactionTableComponent {
   @Input({ required: true }) transactions: StockTransaction[] = [];
   @Input() showStockColumn = false;
+  @Input() allowActions = true;
   @Output() deleteTransaction = new EventEmitter<number>();
 
   get columns(): string[] {
-    return this.showStockColumn
-      ? ['stockId', 'transactionType', 'transactionDate', 'quantity', 'pricePerShare', 'total', 'actions']
-      : ['transactionType', 'transactionDate', 'quantity', 'pricePerShare', 'total', 'actions'];
+    const base = this.showStockColumn
+      ? ['stockId', 'transactionType', 'transactionDate', 'quantity', 'pricePerShare', 'total']
+      : ['transactionType', 'transactionDate', 'quantity', 'pricePerShare', 'total'];
+
+    return this.allowActions ? [...base, 'actions'] : base;
   }
 
   total(t: StockTransaction): number {
