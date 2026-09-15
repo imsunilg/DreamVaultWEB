@@ -1,0 +1,60 @@
+<div class="dv-page">
+  <a routerLink="/admin/users" class="back-link">← Back to Users</a>
+  <h1>{{ isEdit() ? 'Edit User' : 'Add User' }}</h1>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="user-form dv-card">
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" />
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" />
+    </mat-form-field>
+
+    @if (!isEdit()) {
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" />
+        <mat-hint>At least 6 characters</mat-hint>
+      </mat-form-field>
+    }
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role">
+          @for (r of roles; track r) {
+            <mat-option [value]="r">{{ r }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-checkbox formControlName="isActive">Active</mat-checkbox>
+    </div>
+
+    @if (errorMessage()) {
+      <p class="error">{{ errorMessage() }}</p>
+    }
+
+    <div class="actions">
+      <button mat-flat-button color="primary" type="submit">{{ isEdit() ? 'Save Changes' : 'Create User' }}</button>
+      @if (isEdit()) {
+        <button mat-stroked-button type="button" (click)="resetPassword()">Reset Password</button>
+      }
+    </div>
+  </form>
+</div>

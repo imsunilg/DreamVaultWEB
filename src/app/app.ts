@@ -57,8 +57,14 @@ export class App {
     { label: 'Portfolio', path: '/portfolio', icon: 'pie_chart' },
     { label: 'SIP Planner', path: '/sip-planner', icon: 'savings' },
     { label: 'Forecast', path: '/forecast', icon: 'trending_up' },
-    { label: 'Reports', path: '/reports', icon: 'summarize' },
-    { label: 'Settings', path: '/settings', icon: 'settings' }
+    { label: 'Reports', path: '/reports', icon: 'summarize' }
+  ];
+
+  protected readonly adminNavItems: NavItem[] = [
+    { label: 'Admin Dashboard', path: '/admin/dashboard', icon: 'admin_panel_settings' },
+    { label: 'Users', path: '/admin/users', icon: 'group' },
+    { label: 'Login Logs', path: '/admin/login-logs', icon: 'login' },
+    { label: 'User Activity', path: '/admin/user-activity', icon: 'history' }
   ];
 
   onNavItemClick(): void {

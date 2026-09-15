@@ -1,0 +1,125 @@
+<div class="dv-page">
+  <div class="page-header">
+    <h1>Users</h1>
+    <a mat-flat-button color="primary" routerLink="/admin/users/add">
+      <mat-icon>person_add</mat-icon> Add User
+    </a>
+  </div>
+
+  <div class="filters dv-card">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search username, email or name</mat-label>
+      <input matInput [(ngModel)]="search" (ngModelChange)="onSearchChange()" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Role</mat-label>
+      <mat-select [(ngModel)]="role" (selectionChange)="onFilterChange()">
+        <mat-option value="All">All</mat-option>
+        <mat-option value="Admin">Admin</mat-option>
+        <mat-option value="User">User</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="status" (selectionChange)="onFilterChange()">
+        <mat-option value="All">All</mat-option>
+        <mat-option value="Active">Active</mat-option>
+        <mat-option value="Inactive">Inactive</mat-option>
+        <mat-option value="Locked">Locked</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-stroked-button (click)="resetFilters()">Reset Filters</button>
+  </div>
+
+  <div class="dv-card">
+    <div class="dv-table-scroll">
+      <table mat-table [dataSource]="users()" class="dv-table">
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef>Username</th>
+          <td mat-cell *matCellDef="let u"><a [routerLink]="['/admin/users', u.userId]">{{ u.username }}</a></td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let u">{{ u.fullName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let u">{{ u.email }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef>Role</th>
+          <td mat-cell *matCellDef="let u"><span class="dv-badge" [class]="'dv-badge-role-' + u.role">{{ u.role }}</span></td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let u">
+            <span class="dv-badge" [class]="'dv-badge-account-' + accountStatus(u)">{{ accountStatus(u) }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdDate">
+          <th mat-header-cell *matHeaderCellDef>Created</th>
+          <td mat-cell *matCellDef="let u">{{ u.createdDate | date: 'mediumDate' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastLogin">
+          <th mat-header-cell *matHeaderCellDef>Last Login</th>
+          <td mat-cell *matCellDef="let u">{{ u.lastLoginDate ? (u.lastLoginDate | date: 'medium') : 'Never' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let u">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="User actions">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <a mat-menu-item [routerLink]="['/admin/users', u.userId]"><mat-icon>visibility</mat-icon> View</a>
+              <a mat-menu-item [routerLink]="['/admin/users', u.userId, 'edit']"><mat-icon>edit</mat-icon> Edit</a>
+              @if (!u.isActive) {
+                <button mat-menu-item (click)="activate(u)"><mat-icon>check_circle</mat-icon> Activate</button>
+              } @else {
+                <button mat-menu-item [disabled]="u.userId === currentUserId" (click)="deactivate(u)">
+                  <mat-icon>block</mat-icon> Deactivate
+                </button>
+              }
+              @if (u.isLocked) {
+                <button mat-menu-item (click)="unlock(u)"><mat-icon>lock_open</mat-icon> Unlock</button>
+              } @else {
+                <button mat-menu-item [disabled]="u.userId === currentUserId" (click)="lock(u)">
+                  <mat-icon>lock</mat-icon> Lock
+                </button>
+              }
+              <button mat-menu-item [disabled]="u.userId === currentUserId" (click)="deleteUser(u)">
+                <mat-icon>delete</mat-icon> Delete
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns"></tr>
+      </table>
+    </div>
+
+    @if (!users().length) {
+      <p class="dv-disclaimer">No users match these filters.</p>
+    }
+
+    <mat-paginator
+      [length]="totalCount()"
+      [pageSize]="pageSize()"
+      [pageIndex]="page() - 1"
+      [pageSizeOptions]="[10, 20, 50]"
+      (page)="onPageChange($event)"
+    ></mat-paginator>
+  </div>
+</div>

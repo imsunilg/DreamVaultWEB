@@ -1,0 +1,92 @@
+<div class="dv-page">
+  <h1>Login Logs</h1>
+
+  <div class="filters dv-card">
+    <mat-form-field appearance="outline">
+      <mat-label>Date From</mat-label>
+      <input matInput type="date" [(ngModel)]="dateFrom" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Date To</mat-label>
+      <input matInput type="date" [(ngModel)]="dateTo" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput [(ngModel)]="username" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Result</mat-label>
+      <mat-select [(ngModel)]="result">
+        <mat-option value="All">All</mat-option>
+        <mat-option value="Success">Success</mat-option>
+        <mat-option value="Failed">Failed</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" (click)="search()">Search</button>
+    <button mat-stroked-button (click)="resetFilters()">Reset Filters</button>
+  </div>
+
+  <div class="dv-card">
+    <div class="dv-table-scroll">
+      <table mat-table [dataSource]="logs()" class="dv-table">
+        <ng-container matColumnDef="loginDateTime">
+          <th mat-header-cell *matHeaderCellDef>Date/Time</th>
+          <td mat-cell *matCellDef="let l">{{ l.loginDateTime | date: 'medium' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef>User</th>
+          <td mat-cell *matCellDef="let l">{{ l.username }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="result">
+          <th mat-header-cell *matHeaderCellDef>Result</th>
+          <td mat-cell *matCellDef="let l">
+            <span class="dv-badge" [class]="l.success ? 'dv-badge-login-success' : 'dv-badge-login-failed'">
+              {{ l.success ? 'SUCCESS' : 'FAILED' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="reason">
+          <th mat-header-cell *matHeaderCellDef>Reason</th>
+          <td mat-cell *matCellDef="let l">{{ l.failureReason ?? '—' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="ipAddress">
+          <th mat-header-cell *matHeaderCellDef>IP Address</th>
+          <td mat-cell *matCellDef="let l">{{ l.ipAddress }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="browser">
+          <th mat-header-cell *matHeaderCellDef>Browser</th>
+          <td mat-cell *matCellDef="let l">{{ l.browser }} / {{ l.operatingSystem }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="device">
+          <th mat-header-cell *matHeaderCellDef>Device</th>
+          <td mat-cell *matCellDef="let l">{{ l.device }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns"></tr>
+      </table>
+    </div>
+
+    @if (!logs().length) {
+      <p class="dv-disclaimer">No login attempts match these filters.</p>
+    }
+
+    <mat-paginator
+      [length]="totalCount()"
+      [pageSize]="pageSize()"
+      [pageIndex]="page() - 1"
+      [pageSizeOptions]="[10, 20, 50]"
+      (page)="onPageChange($event)"
+    ></mat-paginator>
+  </div>
+</div>

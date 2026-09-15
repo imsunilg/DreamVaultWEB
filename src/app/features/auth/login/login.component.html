@@ -8,14 +8,25 @@
 
     <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form">
       <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email" autocomplete="email" />
+        <mat-label>User ID / Username</mat-label>
+        <input matInput formControlName="username" autocomplete="username" />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
-        <input matInput type="password" formControlName="password" autocomplete="current-password" />
+        <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password" autocomplete="current-password" />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="togglePasswordVisibility()"
+          [attr.aria-label]="hidePassword() ? 'Show password' : 'Hide password'"
+        >
+          <mat-icon>{{ hidePassword() ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button>
       </mat-form-field>
+
+      <mat-checkbox formControlName="rememberMe">Remember me</mat-checkbox>
 
       @if (errorMessage()) {
         <p class="error">{{ errorMessage() }}</p>
@@ -28,10 +39,18 @@
 
     <p class="switch">Don't have an account? <a routerLink="/register">Create one</a></p>
 
-    <div class="demo-hint">
-      <strong>Demo accounts</strong>
-      <div>Admin: sunilbgadakari&#64;gmail.com / Admin&#64;123</div>
-      <div>User: demo.user&#64;dreamvault.local / User&#64;123</div>
-    </div>
+    @if (showDemoCredentials) {
+      <div class="demo-hint">
+        <strong>Demo Credentials — Development only</strong>
+        <button type="button" class="demo-row" (click)="fillDemoCredentials('admin', 'Admin@123')">
+          <span class="demo-role">Admin</span>
+          <span>User ID: <code>admin</code> &nbsp; Password: <code>Admin&#64;123</code></span>
+        </button>
+        <button type="button" class="demo-row" (click)="fillDemoCredentials('demo', 'Demo@123')">
+          <span class="demo-role">User</span>
+          <span>User ID: <code>demo</code> &nbsp; Password: <code>Demo&#64;123</code></span>
+        </button>
+      </div>
+    }
   </mat-card>
 </div>

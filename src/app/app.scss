@@ -54,11 +54,19 @@
   font-size: 14px;
 }
 
-.user-role {
+.nav-section-label {
+  padding: 16px 16px 4px;
   font-size: 11px;
-  padding: 1px 8px;
-  border-radius: 999px;
-  background-color: var(--mat-sys-secondary-container);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.nav-divider {
+  height: 1px;
+  margin: 8px 16px;
+  background-color: var(--mat-sys-outline-variant);
 }
 
 @media (max-width: 480px) {

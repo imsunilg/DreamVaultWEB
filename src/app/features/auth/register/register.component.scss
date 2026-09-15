@@ -40,6 +40,12 @@
   }
 }
 
+.name-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
 .error {
   color: #c0392b;
   font-size: 13px;

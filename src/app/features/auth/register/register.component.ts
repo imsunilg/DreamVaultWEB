@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -24,7 +25,9 @@ export class RegisterComponent {
   loading = signal(false);
 
   form = this.fb.nonNullable.group({
-    name: ['', Validators.required],
+    username: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]+$/)]],
+    firstName: ['', Validators.required],
+    lastName: [''],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
@@ -40,8 +43,8 @@ export class RegisterComponent {
 
     this.authService.register(this.form.getRawValue()).subscribe({
       next: () => this.router.navigate(['/dashboard']),
-      error: err => {
-        this.errorMessage.set(err.status === 409 ? 'An account with this email already exists.' : 'Registration failed. Please try again.');
+      error: (err: HttpErrorResponse) => {
+        this.errorMessage.set(err.error?.message ?? 'Registration failed. Please try again.');
         this.loading.set(false);
       }
     });

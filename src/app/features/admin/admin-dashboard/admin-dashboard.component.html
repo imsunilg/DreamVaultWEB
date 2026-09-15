@@ -1,0 +1,72 @@
+@if (dashboard(); as d) {
+  <div class="dv-page">
+    <div class="page-header">
+      <h1>Admin Dashboard</h1>
+      <div class="quick-actions">
+        <a mat-flat-button color="primary" routerLink="/admin/users/add">
+          <mat-icon>person_add</mat-icon> Add User
+        </a>
+        <a mat-stroked-button routerLink="/admin/users">
+          <mat-icon>group</mat-icon> View Users
+        </a>
+        <a mat-stroked-button routerLink="/admin/login-logs">
+          <mat-icon>login</mat-icon> Login Logs
+        </a>
+        <a mat-stroked-button routerLink="/admin/user-activity">
+          <mat-icon>history</mat-icon> View Activity
+        </a>
+      </div>
+    </div>
+
+    <div class="dv-grid cards">
+      <app-summary-card label="Total Users" [value]="d.stats.totalUsers + ''" icon="group" />
+      <app-summary-card label="Active Users" [value]="d.stats.activeUsers + ''" icon="how_to_reg" tone="positive" />
+      <app-summary-card label="Inactive Users" [value]="d.stats.inactiveUsers + ''" icon="person_off" />
+      <app-summary-card label="Locked Users" [value]="d.stats.lockedUsers + ''" icon="lock" [tone]="d.stats.lockedUsers > 0 ? 'negative' : 'default'" />
+      <app-summary-card label="Administrators" [value]="d.stats.adminUsers + ''" icon="admin_panel_settings" />
+      <app-summary-card label="New This Month" [value]="d.stats.newUsersThisMonth + ''" icon="person_add" tone="positive" />
+      <app-summary-card label="Successful Logins Today" [value]="d.stats.successfulLoginsToday + ''" icon="check_circle" tone="positive" />
+      <app-summary-card label="Failed Logins Today" [value]="d.stats.failedLoginsToday + ''" icon="error" [tone]="d.stats.failedLoginsToday > 0 ? 'negative' : 'default'" />
+    </div>
+
+    <div class="dv-grid charts">
+      <mat-card class="dv-card">
+        <h2>User Status</h2>
+        <app-portfolio-chart
+          [labels]="['Active', 'Inactive', 'Locked']"
+          [data]="[d.userStatus.active, d.userStatus.inactive, d.userStatus.locked]"
+        />
+      </mat-card>
+
+      <mat-card class="dv-card">
+        <h2>Role Distribution</h2>
+        <app-portfolio-chart [labels]="['Admin', 'User']" [data]="[d.roleDistribution.admin, d.roleDistribution.user]" />
+      </mat-card>
+    </div>
+
+    <mat-card class="dv-card">
+      <h2>User Growth (last 6 months)</h2>
+      <app-forecast-chart [labels]="growthLabels()" [series]="growthSeries()" />
+    </mat-card>
+
+    <mat-card class="dv-card">
+      <h2>Login Activity (last 30 days)</h2>
+      <app-forecast-chart [labels]="loginActivityLabels()" [series]="loginActivitySeries()" />
+    </mat-card>
+
+    <mat-card class="dv-card">
+      <h2>Recent Activity</h2>
+      <ul class="activity-list">
+        @for (item of d.recentActivity; track item.createdDate + item.action) {
+          <li>
+            <span class="activity-action">{{ item.action }}</span>
+            <span class="activity-desc">{{ item.description }}</span>
+            <span class="activity-meta">{{ item.username ?? 'system' }} · {{ item.createdDate | date: 'medium' }}</span>
+          </li>
+        } @empty {
+          <p class="dv-disclaimer">No activity recorded yet.</p>
+        }
+      </ul>
+    </mat-card>
+  </div>
+}

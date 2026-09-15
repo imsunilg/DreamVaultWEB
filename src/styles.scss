@@ -61,6 +61,28 @@ body {
   --status-ontrack-text: #1b8a4c;
   --status-atrisk-text: #b8860b;
   --status-behind-text: #c0392b;
+
+  // Admin module: role badges, account status badges, login result badges.
+  --role-admin-bg: #e0e7ff;
+  --role-admin-text: #2d3a8c;
+
+  --role-user-bg: #e4e7ec;
+  --role-user-text: #33414f;
+
+  --account-active-bg: #d7f3e3;
+  --account-active-text: #14663f;
+
+  --account-inactive-bg: #e4e7ec;
+  --account-inactive-text: #46525c;
+
+  --account-locked-bg: #f8d7da;
+  --account-locked-text: #7a1a24;
+
+  --login-success-bg: #d7f3e3;
+  --login-success-text: #14663f;
+
+  --login-failed-bg: #f8d7da;
+  --login-failed-text: #7a1a24;
 }
 
 body.dark-theme {
@@ -79,6 +101,27 @@ body.dark-theme {
   --status-ontrack-text: #4ade80;
   --status-atrisk-text: #f0b955;
   --status-behind-text: #ff6b6b;
+
+  --role-admin-bg: #2b2f5c;
+  --role-admin-text: #c7d0ff;
+
+  --role-user-bg: #2e3944;
+  --role-user-text: #cbd5df;
+
+  --account-active-bg: #123a29;
+  --account-active-text: #6fe3ac;
+
+  --account-inactive-bg: #2e3944;
+  --account-inactive-text: #a9b4bb;
+
+  --account-locked-bg: #4a1620;
+  --account-locked-text: #ff8a95;
+
+  --login-success-bg: #123a29;
+  --login-success-text: #6fe3ac;
+
+  --login-failed-bg: #4a1620;
+  --login-failed-text: #ff8a95;
 }
 
 * {
@@ -151,5 +194,52 @@ body.dark-theme {
 .dv-status-Cancelled {
   color: var(--status-behind-text);
   font-weight: 600;
+}
+
+// Reusable pill badge, used across the Admin module (role, account status, login result).
+.dv-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.dv-badge-role-Admin {
+  background-color: var(--role-admin-bg);
+  color: var(--role-admin-text);
+}
+
+.dv-badge-role-User {
+  background-color: var(--role-user-bg);
+  color: var(--role-user-text);
+}
+
+.dv-badge-account-Active {
+  background-color: var(--account-active-bg);
+  color: var(--account-active-text);
+}
+
+.dv-badge-account-Inactive {
+  background-color: var(--account-inactive-bg);
+  color: var(--account-inactive-text);
+}
+
+.dv-badge-account-Locked {
+  background-color: var(--account-locked-bg);
+  color: var(--account-locked-text);
+}
+
+.dv-badge-login-success {
+  background-color: var(--login-success-bg);
+  color: var(--login-success-text);
+}
+
+.dv-badge-login-failed {
+  background-color: var(--login-failed-bg);
+  color: var(--login-failed-text);
 }
 

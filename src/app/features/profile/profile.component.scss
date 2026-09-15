@@ -1,0 +1,40 @@
+dl {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  dt {
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  dd {
+    margin: 0;
+    font-weight: 600;
+  }
+}
+
+.profile-form,
+.password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 420px;
+
+  button {
+    align-self: flex-start;
+    margin-top: 4px;
+  }
+}
+
+.error {
+  color: #c0392b;
+  font-size: 13px;
+  margin: 0;
+}

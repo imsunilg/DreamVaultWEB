@@ -1,0 +1,50 @@
+@if (user(); as u) {
+  <div class="dv-page">
+    <a routerLink="/admin/users" class="back-link">← Back to Users</a>
+
+    <div class="page-header">
+      <h1>{{ u.fullName }} <span class="username">&#64;{{ u.username }}</span></h1>
+      <a mat-stroked-button [routerLink]="['/admin/users', u.userId, 'edit']">
+        <mat-icon>edit</mat-icon> Edit
+      </a>
+    </div>
+
+    <div class="dv-grid">
+      <mat-card class="dv-card">
+        <h2>Account Information</h2>
+        <dl>
+          <div><dt>Username</dt><dd>{{ u.username }}</dd></div>
+          <div><dt>Email</dt><dd>{{ u.email }}</dd></div>
+          <div><dt>Role</dt><dd><span class="dv-badge" [class]="'dv-badge-role-' + u.role">{{ u.role }}</span></dd></div>
+          <div><dt>Status</dt><dd><span class="dv-badge" [class]="'dv-badge-account-' + accountStatus()">{{ accountStatus() }}</span></dd></div>
+          <div><dt>Created Date</dt><dd>{{ u.createdDate | date: 'medium' }}</dd></div>
+          <div><dt>Last Updated</dt><dd>{{ u.updatedDate | date: 'medium' }}</dd></div>
+        </dl>
+      </mat-card>
+
+      <mat-card class="dv-card">
+        <h2>Login Activity</h2>
+        <dl>
+          <div><dt>Last Login</dt><dd>{{ u.lastLoginDate ? (u.lastLoginDate | date: 'medium') : 'Never' }}</dd></div>
+          <div><dt>Failed Login Count</dt><dd>{{ u.failedLoginCount }}</dd></div>
+          <div><dt>Last Failed Login</dt><dd>{{ u.lastFailedLoginDate ? (u.lastFailedLoginDate | date: 'medium') : '—' }}</dd></div>
+        </dl>
+      </mat-card>
+    </div>
+
+    <mat-card class="dv-card">
+      <h2>Activity Timeline</h2>
+      <ul class="timeline">
+        @for (item of timeline(); track item.auditLogId) {
+          <li>
+            <span class="timeline-action">{{ item.action }}</span>
+            <span class="timeline-desc">{{ item.description }}</span>
+            <span class="timeline-date">{{ item.createdDate | date: 'medium' }}</span>
+          </li>
+        } @empty {
+          <p class="dv-disclaimer">No recorded activity for this user yet.</p>
+        }
+      </ul>
+    </mat-card>
+  </div>
+}

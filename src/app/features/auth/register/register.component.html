@@ -8,9 +8,21 @@
 
     <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form">
       <mat-form-field appearance="outline">
-        <mat-label>Full Name</mat-label>
-        <input matInput formControlName="name" autocomplete="name" />
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" autocomplete="username" />
       </mat-form-field>
+
+      <div class="name-row">
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstName" autocomplete="given-name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName" autocomplete="family-name" />
+        </mat-form-field>
+      </div>
 
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>

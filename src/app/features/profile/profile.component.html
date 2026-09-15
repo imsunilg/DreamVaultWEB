@@ -1,0 +1,61 @@
+@if (auth.currentUser(); as u) {
+  <div class="dv-page">
+    <h1>My Profile</h1>
+
+    <div class="dv-grid">
+      <mat-card class="dv-card">
+        <h2>Account</h2>
+        <dl>
+          <div><dt>Username</dt><dd>{{ u.username }}</dd></div>
+          <div><dt>Role</dt><dd><span class="dv-badge" [class]="'dv-badge-role-' + u.role">{{ u.role }}</span></dd></div>
+          <div><dt>Account Created</dt><dd>{{ u.createdDate ? (u.createdDate | date: 'mediumDate') : '—' }}</dd></div>
+          <div><dt>Last Login</dt><dd>{{ u.lastLoginDate ? (u.lastLoginDate | date: 'medium') : 'Never' }}</dd></div>
+        </dl>
+      </mat-card>
+
+      <mat-card class="dv-card">
+        <h2>Edit Profile</h2>
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="profile-form">
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" />
+          </mat-form-field>
+          @if (profileError()) {
+            <p class="error">{{ profileError() }}</p>
+          }
+          <button mat-flat-button color="primary" type="submit">Save Changes</button>
+        </form>
+      </mat-card>
+    </div>
+
+    <mat-card class="dv-card">
+      <h2>Change Password</h2>
+      <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" class="password-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Current Password</mat-label>
+          <input matInput type="password" formControlName="currentPassword" autocomplete="current-password" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>New Password</mat-label>
+          <input matInput type="password" formControlName="newPassword" autocomplete="new-password" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Confirm New Password</mat-label>
+          <input matInput type="password" formControlName="confirmNewPassword" autocomplete="new-password" />
+        </mat-form-field>
+        @if (passwordError()) {
+          <p class="error">{{ passwordError() }}</p>
+        }
+        <button mat-flat-button color="primary" type="submit">Change Password</button>
+      </form>
+    </mat-card>
+  </div>
+}
