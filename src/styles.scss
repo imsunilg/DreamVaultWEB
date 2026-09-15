@@ -41,6 +41,46 @@ body {
   }
 }
 
+// Semantic, theme-aware colors for priority badges and status labels.
+// Light values are the defaults; body.dark-theme overrides them so both
+// the background and text swap together (fixes low-contrast badges in
+// dark mode — see dream-card.component.scss and the .dv-status-* rules below).
+:root {
+  --priority-critical-bg: #f8d7da;
+  --priority-critical-text: #7a1a24;
+
+  --priority-high-bg: #ffe5b4;
+  --priority-high-text: #7a4b06;
+
+  --priority-medium-bg: #e4e7ec;
+  --priority-medium-text: #33414f;
+
+  --priority-low-bg: #e9ecef;
+  --priority-low-text: #46525c;
+
+  --status-ontrack-text: #1b8a4c;
+  --status-atrisk-text: #b8860b;
+  --status-behind-text: #c0392b;
+}
+
+body.dark-theme {
+  --priority-critical-bg: #4a1620;
+  --priority-critical-text: #ff8a95;
+
+  --priority-high-bg: #4a3208;
+  --priority-high-text: #ffcc66;
+
+  --priority-medium-bg: #2e3944;
+  --priority-medium-text: #cbd5df;
+
+  --priority-low-bg: #262e33;
+  --priority-low-text: #a9b4bb;
+
+  --status-ontrack-text: #4ade80;
+  --status-atrisk-text: #f0b955;
+  --status-behind-text: #ff6b6b;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -96,20 +136,20 @@ body {
 .dv-status-OnTrack,
 .dv-status-Achieved,
 .dv-status-Completed {
-  color: #1b8a4c;
+  color: var(--status-ontrack-text);
   font-weight: 600;
 }
 
 .dv-status-atRisk,
 .dv-status-AtRisk {
-  color: #b8860b;
+  color: var(--status-atrisk-text);
   font-weight: 600;
 }
 
 .dv-status-behind,
 .dv-status-Behind,
 .dv-status-Cancelled {
-  color: #c0392b;
+  color: var(--status-behind-text);
   font-weight: 600;
 }
 

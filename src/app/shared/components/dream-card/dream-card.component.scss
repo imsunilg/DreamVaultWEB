@@ -50,10 +50,27 @@
   text-align: right;
 }
 
+// Priority badge colors: both background AND label text color must be set
+// together as a pair, otherwise the text falls back to Material's default
+// on-surface token, which flips light/dark independently of these hardcoded
+// backgrounds and becomes unreadable (e.g. white text on a pale amber chip
+// in dark mode). Values come from the theme-aware variables in styles.scss.
 .priority-Critical {
-  --mat-chip-elevated-container-color: #f8d7da;
+  --mat-chip-elevated-container-color: var(--priority-critical-bg);
+  --mat-chip-label-text-color: var(--priority-critical-text);
 }
 
 .priority-High {
-  --mat-chip-elevated-container-color: #ffe5b4;
+  --mat-chip-elevated-container-color: var(--priority-high-bg);
+  --mat-chip-label-text-color: var(--priority-high-text);
+}
+
+.priority-Medium {
+  --mat-chip-elevated-container-color: var(--priority-medium-bg);
+  --mat-chip-label-text-color: var(--priority-medium-text);
+}
+
+.priority-Low {
+  --mat-chip-elevated-container-color: var(--priority-low-bg);
+  --mat-chip-label-text-color: var(--priority-low-text);
 }
